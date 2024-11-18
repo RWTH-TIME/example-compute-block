@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  # Spark Master
+  spark-master:
+    build:
+      context: ./spark
+    container_name: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_HOST=spark-master
+      - SPARK_MASTER_PORT=7077
+    ports:
+      - "8080:8080"  # Spark UI
+      - "7077:7077"  # Spark Master Port
+    networks:
+      - spark-network
+    volumes:
+      - ./spark/spark-defaults.conf:/opt/bitnami/spark/conf/spark-defaults.conf
+
+  # Spark Worker (you can scale this to more workers)
+  spark-worker:
+    build:
+      context: ./spark
+    container_name: spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER=spark://spark-master:7077
+    networks:
+      - spark-network
+
+  # PostgreSQL
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"  # PostgreSQL default port
+    networks:
+      - spark-network
+
+  # MinIO (S3 compatible)
+  minio:
+    image: quay.io/minio/minio
+    container_name: minio
+    environment:
+      - MINIO_ACCESS_KEY=your_access_key
+      - MINIO_SECRET_KEY=your_secret_key
+    command: server /data
+    ports:
+      - "9000:9000"  # MinIO UI and S3 API
+    volumes:
+      - minio_data:/data
+    networks:
+      - spark-network
+
+  # Network configuration
+networks:
+  spark-network:
+    driver: bridge
+
+volumes:
+  minio_data:
+

@@ -1,0 +1,7 @@
+author: test_sdk
+description: testing things
+docker_image: ghcr.io/testing-things
+entrypoints:
+  test_entrypoint:
+    description: no description
+name: Testing Things
