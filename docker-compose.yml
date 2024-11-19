@@ -3,8 +3,7 @@ version: '3.8'
 services:
   # Spark Master
   spark-master:
-    build:
-      context: ./spark
+    image: bitnami/spark:3.5.3-debian-12-r2
     container_name: spark-master
     environment:
       - SPARK_MODE=master
@@ -15,20 +14,17 @@ services:
       - "7077:7077"  # Spark Master Port
     networks:
       - spark-network
-    volumes:
-      - ./spark/spark-defaults.conf:/opt/bitnami/spark/conf/spark-defaults.conf
 
   # Spark Worker (you can scale this to more workers)
   spark-worker:
-    build:
-      context: ./spark
+    image: bitnami/spark:3.5.3-debian-12-r2
     container_name: spark-worker
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER=spark://spark-master:7077
     networks:
       - spark-network
-
+  
   # PostgreSQL
   postgres:
     image: postgres:13
@@ -54,6 +50,13 @@ services:
       - "9000:9000"  # MinIO UI and S3 API
     volumes:
       - minio_data:/data
+    networks:
+      - spark-network
+
+  test:
+    build: .
+    depends_on:
+      - postgres
     networks:
       - spark-network
 
