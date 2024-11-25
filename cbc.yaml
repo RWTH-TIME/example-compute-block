@@ -1,7 +1,30 @@
-author: test_sdk
-description: testing things
-docker_image: ghcr.io/testing-things
+author: PK
+description: Example, non functional, CB
+docker_image: TODO
 entrypoints:
   test_entrypoint:
-    description: no description
-name: Testing Things
+    description: Test Entrypoint for testing postgres connection
+    outputs:
+      db_output:
+        config:
+          DB_NAME: postgres
+          PG_PORT: 5432
+          POSTGRES_HOST: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          TABLE_NAME: your_table_name
+        description: A table which will be written to the configured postgres
+        type: "db_table"
+  test_file:
+    description: Test Entrypoint for testing s3 file handling
+    outputs:
+      minio_output:
+        config:
+          S3_ACCESS_KEY: minioadmin
+          S3_HOST: http://minio
+          S3_PORT: 9000
+          S3_SECRET_KEY: minioadmin
+          TARGET_FILE_NAME: target.txt
+        description: a file will be uploaded with the name TARGET_FILE_NAME to the configured s3 
+        type: "file"
+name: Test Example and not functional Compute Block

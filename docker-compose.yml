@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Spark Master
   spark-master:
-    image: bitnami/spark:3.5.3-debian-12-r2
+    image: bitnami/spark:3.5.3
     container_name: spark-master
     environment:
       - SPARK_MODE=master
@@ -17,7 +17,7 @@ services:
 
   # Spark Worker (you can scale this to more workers)
   spark-worker:
-    image: bitnami/spark:3.5.3-debian-12-r2
+    image: bitnami/spark:3.5.3
     container_name: spark-worker
     environment:
       - SPARK_MODE=worker
@@ -38,20 +38,22 @@ services:
     networks:
       - spark-network
 
-  # MinIO (S3 compatible)
   minio:
     image: quay.io/minio/minio
-    container_name: minio
+    restart: always
+    command: server /data --console-address ":9001"
     environment:
-      - MINIO_ACCESS_KEY=your_access_key
-      - MINIO_SECRET_KEY=your_secret_key
-    command: server /data
-    ports:
-      - "9000:9000"  # MinIO UI and S3 API
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+      - MINIO_LOG_LEVEL=debug
     volumes:
       - minio_data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
     networks:
       - spark-network
+
 
   test:
     build: .
@@ -59,6 +61,8 @@ services:
       - postgres
     networks:
       - spark-network
+    environment:
+      - DEVELOPMENT=False
 
   # Network configuration
 networks:
