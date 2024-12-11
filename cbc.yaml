@@ -1,6 +1,6 @@
 author: PK
 description: Example, non functional, CB
-docker_image: TODO
+docker_image: ghcr.io/rwth-time/example-compute-block/example-compute-block
 entrypoints:
   test_entrypoint:
     description: Test Entrypoint for testing postgres connection
