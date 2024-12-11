@@ -1,0 +1,1 @@
+scystream-sdk==1.0

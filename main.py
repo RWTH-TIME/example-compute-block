@@ -120,6 +120,6 @@ def test_file(settings):
     )
 
 
-if __name__ == "__main__":
-    Scheduler.execute_function("test_entrypoint")
-    Scheduler.execute_function("test_file")
+# if __name__ == "__main__":
+#    Scheduler.execute_function("test_entrypoint")
+#    Scheduler.execute_function("test_file")
