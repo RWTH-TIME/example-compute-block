@@ -1,0 +1,60 @@
+# This cbc_test.yaml is used for testing the core application
+author: PK
+description: Example, non functional, CB
+docker_image: ghcr.io/rwth-time/example-compute-block/example-compute-block
+entrypoints:
+  test_entrypoint:
+    description: Test Entrypoint for testing postgres connection
+    envs:
+      LANGUAGE: "de"
+      GH_USER: "RWTH-TIME"
+      GH_PASS: null
+    inputs:
+      file_input:
+        config:
+          S3_ACCESS_KEY: null
+          S3_HOST: http://minio
+          S3_PORT: 9000
+          S3_SECRET_KEY: null
+          TARGET_FILE_NAME: input.txt
+        description: A file 
+        type: "file"
+      someinput:
+        config:
+          S3_ACCESS_KEY: test
+          S3_HOST: null
+          S3_SECRET_KEY: null
+        description: Some random input
+        type: "file"
+    outputs:
+      db_output:
+        config:
+          DB_NAME: postgres
+          PG_PORT: 5432
+          POSTGRES_HOST: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          TABLE_NAME: your_table_name
+        description: A table which will be written to the configured postgres
+        type: "db_table"
+      facebook_post:
+        config:
+          FB_USER: test
+          FB_PASS: null
+          POST_DESCRIPTION: null
+        description: Test File Output 
+        type: "file"
+  # This one does not have inputs, and envs
+  test_file:
+    description: Test Entrypoint for testing s3 file handling
+    outputs:
+      minio_output:
+        config:
+          S3_ACCESS_KEY: minioadmin
+          S3_HOST: http://minio
+          S3_PORT: 9000
+          S3_SECRET_KEY: minioadmin
+          TARGET_FILE_NAME: target.txt
+        description: a file will be uploaded with the name TARGET_FILE_NAME to the configured s3 
+        type: "file"
+name: Test Example and not functional Compute Block
