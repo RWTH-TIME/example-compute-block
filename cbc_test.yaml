@@ -17,12 +17,13 @@ entrypoints:
           S3_PORT: 9000
           S3_SECRET_KEY: null
           TARGET_FILE_NAME: input.txt
+          DISABLE_READ: true
         description: A file 
         type: "file"
       someinput:
         config:
           S3_ACCESS_KEY: test
-          S3_HOST: null
+          S3_HOST: [true, false, true, false]
           S3_SECRET_KEY: null
         description: Some random input
         type: "file"
@@ -30,18 +31,20 @@ entrypoints:
       db_output:
         config:
           DB_NAME: postgres
-          PG_PORT: 5432
+          PG_PORTS: [5432, 5433, 5100, 2001]
           POSTGRES_HOST: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
           TABLE_NAME: your_table_name
+          NEEDS_AUTH: true
         description: A table which will be written to the configured postgres
         type: "db_table"
       facebook_post:
         config:
           FB_USER: test
           FB_PASS: null
-          POST_DESCRIPTION: null
+          POST_DESCRIPTION: ["teststr", "noch", "test"]
+          DISABLED: false
         description: Test File Output 
         type: "file"
   # This one does not have inputs, and envs
