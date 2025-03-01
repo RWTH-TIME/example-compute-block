@@ -22,11 +22,11 @@ entrypoints:
         type: "file"
       someinput:
         config:
-          S3_ACCESS_KEY: test
-          S3_HOST: [true, false, true, false]
-          S3_SECRET_KEY: null
+          SOMETHING: test
+          BOOLEAN_LIST: [true, false, true, false]
+          SOME_MANDATORY_INPUT: null
         description: Some random input
-        type: "file"
+        type: "db_table"
     outputs:
       db_output:
         config:
