@@ -1,0 +1,37 @@
+name: "Example Compute Block"
+description: "Contains examples"
+author: "John Doe"
+docker_image: "https://ghcr.io/nlp-toolbox"
+
+entrypoints:
+  example_task:
+    description: "Run example"
+    envs:
+      LANGUAGE: "de"
+    inputs:
+      pg_input:
+        description: "Postgres input example"
+        type: "pg_table"
+        config:
+          my_first_pg_PG_USER: null
+          my_first_pg_PG_PASS: null
+          my_first_pg_PG_HOST: null
+          my_first_pg_PG_PORT: null
+          my_first_pg_DB_TABLE: null
+    outputs:
+      file_output:
+        type: "file"
+        config:
+          my_first_file_BUCKET_NAME: null
+          my_first_file_FILE_NAME: null
+          my_first_file_FILE_PATH: null
+          my_first_file_S3_ACCESS_KEY: null
+          my_first_file_S3_HOST: null
+          my_first_file_S3_PORT: null
+          my_first_file_S3_SECRET_KEY: null
+      custom_output:
+        description: "custom description"
+        type: "custom"
+        config:
+          FB_USER: "RWTH"
+          FB_PASS: null
