@@ -18,6 +18,23 @@ entrypoints:
           my_first_pg_PG_HOST: null
           my_first_pg_PG_PORT: null
           my_first_pg_DB_TABLE: null
+      file_input:
+        description: "File input example"
+        type: "file"
+        config:
+          some_file_BUCKET_NAME: null
+          some_file_FILE_NAME: null
+          seme_file_FILE_PATH: null
+          some_file_S3_ACCESS_KEY: null
+          some_file_S3_HOST: null
+          some_file_S3_PORT: null
+          some_file_S3_SECRET_KEY: null
+      custom_input:
+        description: "custom input"
+        type: "custom"
+        config:
+          TAGESSCHAU_TOKEN: "RWTH"
+          TAGESSCHAU_DATE: null
     outputs:
       file_output:
         type: "file"
@@ -29,6 +46,15 @@ entrypoints:
           my_first_file_S3_HOST: null
           my_first_file_S3_PORT: null
           my_first_file_S3_SECRET_KEY: null
+      pg_input:
+        description: "Postgres ouput example"
+        type: "pg_table"
+        config:
+          pg_PG_USER: null
+          pg_PG_PASS: null
+          pg_PG_HOST: null
+          pg_PG_PORT: null
+          pg_DB_TABLE: null
       custom_output:
         description: "custom description"
         type: "custom"
