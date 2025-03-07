@@ -18,6 +18,7 @@ entrypoints:
           my_first_pg_PG_HOST: null
           my_first_pg_PG_PORT: null
           my_first_pg_DB_TABLE: null
+          my_first_pg_EXTENDS: test
       file_input:
         description: "File input example"
         type: "file"
@@ -46,6 +47,7 @@ entrypoints:
           my_first_file_S3_HOST: null
           my_first_file_S3_PORT: null
           my_first_file_S3_SECRET_KEY: null
+          my_first_file_EXTENDS: test
       pg_input:
         description: "Postgres ouput example"
         type: "pg_table"
