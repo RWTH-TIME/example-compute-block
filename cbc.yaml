@@ -1,30 +1,60 @@
-author: PK
-description: Example, non functional, CB
+name: Example Crawling & Analysis Block 
+author: Paul Kalhorn
+description: This is a demo compute block. One entrypoint for crawling, and one for analysis.
 docker_image: ghcr.io/rwth-time/example-compute-block/example-compute-block
 entrypoints:
-  test_entrypoint:
-    description: Test Entrypoint for testing postgres connection
+  crawl_urls:
+    description: Pass URLs which will be converted to text. 
+    envs:
+      URLS: ["https://www.gutenberg.org/cache/epub/3300/pg3300.txt", "https://www.gutenberg.org/cache/epub/6435/pg6435.txt", "https://www.gutenberg.org/cache/epub/26163/pg26163.txt", "https://www.gutenberg.org/cache/epub/833/pg833.txt"]
     outputs:
-      db_output:
+      txt_file_out:
         config:
-          DB_NAME: postgres
-          PG_PORT: 5432
-          POSTGRES_HOST: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          TABLE_NAME: your_table_name
-        description: A table which will be written to the configured postgres
-        type: "db_table"
-  test_file:
-    description: Test Entrypoint for testing s3 file handling
+          test_file_containting_crawled_words_BUCKET_NAME: null
+          test_file_containting_crawled_words_FILE_NAME: null
+          test_file_containting_crawled_words_FILE_PATH: null
+          test_file_containting_crawled_words_S3_ACCESS_KEY: null
+          test_file_containting_crawled_words_S3_HOST: null
+          test_file_containting_crawled_words_S3_PORT: null
+          test_file_containting_crawled_words_S3_SECRET_KEY: null
+        description: File containing the combined text from the crawled urls.
+        type: file
+  gen_stats:
+    description: Use this entrypoint to generate statistics on top of text data.
+    envs:
+      USE_STOPWORDS: true
+    inputs:
+      txt_file_input:
+        config:
+          txt_input_BUCKET_NAME: null
+          txt_input_FILE_NAME: null
+          txt_input_FILE_PATH: null
+          txt_input_S3_ACCESS_KEY: null
+          txt_input_S3_HOST: null
+          txt_input_S3_PORT: null
+          txt_input_S3_SECRET_KEY: null
+        description: A .txt file 
+        type: file
     outputs:
-      minio_output:
+      pdf_least_common:
         config:
-          S3_ACCESS_KEY: minioadmin
-          S3_HOST: http://minio
-          S3_PORT: 9000
-          S3_SECRET_KEY: minioadmin
-          TARGET_FILE_NAME: target.txt
-        description: a file will be uploaded with the name TARGET_FILE_NAME to the configured s3 
-        type: "file"
-name: Test Example and not functional Compute Block
+          least_common_BUCKET_NAME: null
+          least_common_FILE_NAME: null
+          least_common_FILE_PATH: null
+          least_common_S3_ACCESS_KEY: null
+          least_common_S3_HOST: null
+          least_common_S3_PORT: null
+          least_common_S3_SECRET_KEY: null
+        description: Generates a pdf file listing the least common words and their word count. 
+        type: file
+      pdf_most_common:
+        config:
+          most_common_BUCKET_NAME: null
+          most_common_FILE_NAME: null
+          most_common_FILE_PATH: null
+          most_common_S3_ACCESS_KEY: null
+          most_common_S3_HOST: null
+          most_common_S3_PORT: null
+          most_common_S3_SECRET_KEY: null
+        description: Generates a pdf file listing the most common words and their word count.
+        type: file

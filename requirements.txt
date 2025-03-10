@@ -1,1 +1,5 @@
-scystream-sdk==1.0
+scystream-sdk==1.1.0
+requests==2.32.3
+beautifulsoup4==4.13.3
+textblob==0.19.0
+reportlab==4.3.1
