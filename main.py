@@ -12,6 +12,9 @@ from scystream.sdk.scheduler import Scheduler
 from pathlib import Path
 import os
 
+from typing_extensions import Annotated
+from pydantic_settings import ForceDecode
+
 
 class TextFileOutput(FileSettings, OutputSettings):
     __identifier__ = "test_file_containting_crawled_words"
@@ -19,7 +22,7 @@ class TextFileOutput(FileSettings, OutputSettings):
 
 
 class CrawlerEntrySettings(EnvSettings):
-    URLS: List[str] = [
+    URLS: Annotated[List[str], ForceDecode] = [
         "https://www.gutenberg.org/cache/epub/3300/pg3300.txt",
         "https://www.gutenberg.org/cache/epub/6435/pg6435.txt",
         "https://www.gutenberg.org/cache/epub/26163/pg26163.txt",
